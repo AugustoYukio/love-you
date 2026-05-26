@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Para Minha Garota ❤️</title>
+    <style>
+        /* Estilos Gerais - Focado em Mobile */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #ffeef2; /* Fundo rosinha claro */
+            color: #4a4a4a;
+        }
+
+        /* Container do Carrossel */
+        .carousel-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Esconder barra de rolagem */
+        .carousel-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Cada Slide individual */
+        .slide {
+            flex: 0 0 100%;
+            width: 100%;
+            height: 100%;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Indicadores de Progresso (Estilo Stories) */
+        .progress-container {
+            position: absolute;
+            top: 20px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+            z-index: 10;
+        }
+
+        .progress-bar {
+            height: 4px;
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 2px;
+            transition: background-color 0.3s;
+        }
+
+        .progress-bar.active {
+            background-color: #ff4d6d; /* Rosa choque para o atual */
+        }
+
+        /* Elementos de Conteúdo */
+        h1 {
+            font-size: 2rem;
+            color: #ff4d6d;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        img {
+            max-width: 85%;
+            max-height: 40vh;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        /* Animaçãozinha pro coração */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Estilos específicos para backgrounds diferentes */
+        .bg-white { background-color: #ffffff; }
+        .bg-romantic { background-color: #ffcad4; }
+        .bg-dark { background-color: #2b2d42; color: #f8f9fa; }
+        .bg-dark h1 { color: #ef233c; }
+
+        /* Instrução de arrastar */
+        .swipe-hint {
+            position: absolute;
+            bottom: 20px;
+            font-size: 0.85rem;
+            color: #a0a0a0;
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-container" id="progressContainer">
+        </div>
+
+    <div class="carousel-container" id="carousel">
+
+        <div class="slide">
+            <div class="icon">🎁</div>
+            <h1>Para o meu amor...</h1>
+            <p>Preparei uma surpresa para você. Arrasta pro lado para começar!</p>
+            <div class="swipe-hint">Arraste para o lado 👉</div>
+        </div>
+
+        <div class="slide bg-white">
+            <h1>Antes de abrir a caixa...</h1>
+            <p>Cada uma das 20 divisórias tem um Shopkin e um pedacinho da nossa história. Mas antes de você abrir o primeiro, eu queria te dizer o quanto você é especial para mim.</p>
+            <div class="swipe-hint">Continue arrastando 👉</div>
+        </div>
+
+        <div class="slide">
+            <h1>Nossa Primeira Foto</h1>
+            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500" alt="Exemplo Foto">
+            <p>Olho para essa foto e lembro exatamente do frio na barriga que eu senti nesse dia.</p>
+        </div>
+
+        <div class="slide bg-romantic">
+            <p style="font-weight: bold; font-size: 1.3rem;">Você me faz o cara mais feliz do mundo!</p>
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2I4cjBlY3A0MXV4Nm9pZ3Vvdm9pZnd5Ym50Nm95YTI0Zzh0cm9vciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l4pTdcifPZaXBXYMo/giphy.gif" alt="GIF fofo" style="max-height: 50vh; max-width: 95%;">
+        </div>
+
+        <div class="slide bg-dark">
+            <div class="icon">✨</div>
+            <h1>Um motivo especial...</h1>
+            <p>Dentre os 20 motivos que coloquei na caixa, o maior deles é a sua capacidade de transformar qualquer dia comum no melhor dia da minha vida.</p>
+        </div>
+
+        <div class="slide bg-white">
+            <h1>Nossas Aventuras</h1>
+            <div style="display: flex; gap: 10px; justify-content: center; max-width: 90%;">
+                <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=300" style="width: 48%; height: 25vh;">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300" style="width: 48%; height: 25vh;">
+            </div>
+            <p>Cada momento com você é o meu favorito.</p>
+        </div>
+
+        <div class="slide">
+            <h1>Próximos Passos 🗺️</h1>
+            <p style="text-align: left; max-width: 80%; margin: 0 auto;">
+                🔹 Abrir os 20 Shopkins<br><br>
+                🔹 Escolher o seu favorito<br><br>
+                🔹 Me dar um abraço bem forte<br><br>
+                🔹 Decidir onde vamos jantar hoje!
+            </p>
+        </div>
+
+        <div class="slide bg-romantic">
+            <h1 style="font-size: 3rem; margin-bottom: 10px;">❤️</h1>
+            <p style="font-size: 1.5rem; font-style: italic;">"Eu amo você. Ontem, hoje e todos os próximos dias."</p>
+        </div>
+
+        <div class="slide bg-white">
+            <img src="https://images.unsplash.com/photo-1464746133101-a2c3f88e0dd9?w=500" alt="Foto">
+            <h1>Pronta?</h1>
+            <p>Agora falta só mais um deslize para liberar o seu jogo...</p>
+        </div>
+
+        <div class="slide bg-dark">
+            <div class="icon">🎉</div>
+            <h1 style="color: #ff4d6d;">Pode abrir!</h1>
+            <p>O site acaba aqui, mas a sua surpresa está só começando. Vá para a <b>Divisória Número 1</b> e divirta-se! Te amo!</p>
+        </div>
+
+    </div>
+
+    <script>
+        const carousel = document.getElementById('carousel');
+        const progressContainer = document.getElementById('progressContainer');
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        // Criar as barrinhas de progresso dinamicamente
+        for (let i = 0; i < totalSlides; i++) {
+            const bar = document.createElement('div');
+            bar.classList.add('progress-bar');
+            if (i === 0) bar.classList.add('active');
+            progressContainer.appendChild(bar);
+        }
+
+        const progressBars = document.querySelectorAll('.progress-bar');
+
+        // Escutar o evento de rolagem para atualizar as barrinhas
+        carousel.addEventListener('scroll', () => {
+            const width = carousel.offsetWidth;
+            const scrollLeft = carousel.scrollLeft;
+            // Calcula qual slide está mais visível na tela
+            const activeIndex = Math.round(scrollLeft / width);
+
+            progressBars.forEach((bar, index) => {
+                if (index === activeIndex) {
+                    bar.classList.add('active');
+                } else {
+                    bar.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
