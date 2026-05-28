@@ -5,47 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Para Minha Princesa ❤️</title>
     <link rel="icon" type="image/x-icon" href="icon.png">
+
     <style>
-        /* Estilos Gerais - Focado em Mobile */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        body, html {
+        html, body {
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background-color: #ffeef2; /* Fundo rosinha claro */
+            background-color: #ffeef2;
             color: #4a4a4a;
+            touch-action: pan-y;
         }
 
-        /* Container do Carrossel */
+        /* ===== CARROSSEL PREMIUM ===== */
+        .carousel-wrapper {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
         .carousel-container {
             display: flex;
             width: 100%;
             height: 100%;
-            overflow-x: auto;
-            scroll-snap-type: x proximity;
-            scroll-behavior: smooth;
-            overscroll-behavior-x: contain;
-            -webkit-overflow-scrolling: touch;
-            scroll-padding-inline: 20px;
+            will-change: transform;
+            transition:
+                transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        /* Esconder barra de rolagem */
-        .carousel-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        /* Cada Slide individual */
+        /* ===== SLIDES ===== */
         .slide {
             flex: 0 0 100%;
             width: 100%;
             height: 100%;
-            scroll-snap-align: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -53,51 +53,101 @@
             padding: 40px 25px;
             text-align: center;
             position: relative;
+            overflow: hidden;
+
+            opacity: 0.35;
+            transform: scale(0.96);
+            filter: blur(2px);
+
+            transition:
+                opacity 0.7s ease,
+                transform 0.7s ease,
+                filter 0.7s ease;
         }
 
-        /* Indicadores de Progresso (Estilo Stories) */
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+            filter: blur(0px);
+        }
+
+        /* ===== STORIES BARS ===== */
         .progress-container {
             position: absolute;
-            top: 20px;
-            left: 10px;
-            right: 10px;
+            top: env(safe-area-inset-top, 20px);
+            left: 12px;
+            right: 12px;
             display: flex;
-            gap: 5px;
-            z-index: 10;
+            gap: 6px;
+            z-index: 50;
         }
 
         .progress-bar {
-            height: 4px;
             flex: 1;
-            background-color: rgba(255, 255, 255, 0.4);
-            border-radius: 2px;
-            transition: background-color 0.3s;
+            height: 4px;
+            background: rgba(255,255,255,0.25);
+            border-radius: 999px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
         }
 
-        .progress-bar.active {
-            background-color: #ff4d6d; /* Rosa choque para o atual */
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg,#ff4d6d,#ff758f);
+            border-radius: inherit;
+            transition: width 0.55s ease;
+            box-shadow: 0 0 10px rgba(255,77,109,.5);
         }
 
-        /* Elementos de Conteúdo */
+        .progress-bar.active .progress-fill {
+            width: 100%;
+        }
+
+        /* ===== CONTEÚDO ===== */
         h1 {
             font-size: 2rem;
             color: #ff4d6d;
             margin-bottom: 20px;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all .6s ease;
         }
 
         p {
             font-size: 1.1rem;
             line-height: 1.6;
             margin-bottom: 20px;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all .7s ease;
         }
 
         img {
             max-width: 85%;
             max-height: 40vh;
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 18px;
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.15),
+                0 0 30px rgba(255,77,109,0.12);
+
             object-fit: cover;
             margin-bottom: 20px;
+
+            transform: scale(.92);
+            opacity: 0;
+            transition: all .8s ease;
+        }
+
+        .slide.active h1,
+        .slide.active p {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .slide.active img {
+            transform: scale(1);
+            opacity: 1;
         }
 
         .icon {
@@ -106,42 +156,73 @@
             animation: pulse 2s infinite;
         }
 
-        /* Animaçãozinha pro coração */
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.12); }
             100% { transform: scale(1); }
         }
 
-        /* Estilos específicos para backgrounds diferentes */
         .bg-white { background-color: #ffffff; }
-        .bg-romantic { background-color: #ffcad4; }
-        .bg-dark { background-color: #2b2d42; color: #f8f9fa; }
-        .bg-dark h1 { color: #ef233c; }
 
-        /* Instrução de arrastar */
+        .bg-romantic {
+            background:
+                linear-gradient(
+                    180deg,
+                    #ffd6df 0%,
+                    #ffcad4 100%
+                );
+        }
+
+        .bg-dark {
+            background:
+                radial-gradient(circle at top,#3d405f,#1d1e2c);
+            color: #f8f9fa;
+        }
+
+        .bg-dark h1 {
+            color: #ef233c;
+        }
+
+        /* ===== HINT ===== */
         .swipe-hint {
             position: absolute;
-            bottom: 20px;
+            bottom: 25px;
             font-size: 0.85rem;
             color: #a0a0a0;
-            animation: bounce 1.5s infinite;
+            animation: bounce 1.6s infinite;
         }
 
         @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+            0%,100% { transform: translateX(0); }
+            50% { transform: translateX(8px); }
+        }
+
+        /* ===== EFEITO PREMIUM MOBILE ===== */
+        .slide::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(
+                    120deg,
+                    rgba(255,255,255,0.08),
+                    transparent 40%,
+                    rgba(255,255,255,0.06)
+                );
+
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
 
-    <div class="progress-container" id="progressContainer">
-        </div>
+<div class="carousel-wrapper">
+
+    <div class="progress-container" id="progressContainer"></div>
 
     <div class="carousel-container" id="carousel">
 
-        <div class="slide">
+        <div class="slide active">
             <div class="icon">🎁</div>
             <h1>Para o meu amor...</h1>
             <p>Preparei uma surpresa para você. Arrasta pro lado para começar!</p>
@@ -177,7 +258,7 @@
         </div>
 
         <div class="slide">
-            <h1>Agora vamos para as regras<h1>
+            <h1>Agora vamos para as regras</h1>
             <p style="text-align: left; max-width: 100%; margin: 0 auto;">
                 🔹 Abrir uma divisória por dia<br><br>
                 🔹 Sem roubar hein, tô de olho 👀<br><br>
@@ -204,38 +285,107 @@
         </div>
 
     </div>
+</div>
 
-    <script>
-        const carousel = document.getElementById('carousel');
-        const progressContainer = document.getElementById('progressContainer');
-        const slides = document.querySelectorAll('.slide');
-        const totalSlides = slides.length;
+<script>
+    const carousel = document.getElementById('carousel');
+    const slides = document.querySelectorAll('.slide');
+    const progressContainer = document.getElementById('progressContainer');
 
-        // Criar as barrinhas de progresso dinamicamente
-        for (let i = 0; i < totalSlides; i++) {
-            const bar = document.createElement('div');
-            bar.classList.add('progress-bar');
-            if (i === 0) bar.classList.add('active');
-            progressContainer.appendChild(bar);
+    let current = 0;
+    let startX = 0;
+    let isDragging = false;
+    let isAnimating = false;
+
+    /* ===== BARRAS STORIES ===== */
+    slides.forEach((_, index) => {
+        const bar = document.createElement('div');
+        bar.className = 'progress-bar';
+
+        const fill = document.createElement('div');
+        fill.className = 'progress-fill';
+
+        bar.appendChild(fill);
+
+        if(index === 0){
+            bar.classList.add('active');
         }
 
-        const progressBars = document.querySelectorAll('.progress-bar');
+        progressContainer.appendChild(bar);
+    });
 
-        // Escutar o evento de rolagem para atualizar as barrinhas
-        carousel.addEventListener('scroll', () => {
-            const width = carousel.offsetWidth;
-            const scrollLeft = carousel.scrollLeft;
-            // Calcula qual slide está mais visível na tela
-            const activeIndex = Math.floor((scrollLeft + width / 2) / width);
+    const bars = document.querySelectorAll('.progress-bar');
 
-            progressBars.forEach((bar, index) => {
-                if (index === activeIndex) {
-                    bar.classList.add('active');
-                } else {
-                    bar.classList.remove('active');
-                }
-            });
+    function updateSlides() {
+
+        carousel.style.transform =
+            `translate3d(-${current * 100}vw,0,0)`;
+
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === current);
         });
-    </script>
+
+        bars.forEach((bar, i) => {
+            bar.classList.toggle('active', i <= current);
+        });
+
+        setTimeout(() => {
+            isAnimating = false;
+        }, 750);
+    }
+
+    function goNext() {
+        if (current >= slides.length - 1 || isAnimating) return;
+
+        current++;
+        isAnimating = true;
+        updateSlides();
+    }
+
+    function goPrev() {
+        if (current <= 0 || isAnimating) return;
+
+        current--;
+        isAnimating = true;
+        updateSlides();
+    }
+
+    /* ===== SWIPE ESTILO STORIES ===== */
+    carousel.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+    }, { passive: true });
+
+    carousel.addEventListener('touchend', e => {
+
+        if (!isDragging) return;
+
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+
+        /* ===== BLOQUEIO DE PULAR ===== */
+        if (Math.abs(diff) < 40) return;
+
+        if (diff > 0) {
+            goNext();
+        } else {
+            goPrev();
+        }
+
+        isDragging = false;
+    });
+
+    /* ===== IMPEDIR SCROLL HORIZONTAL ===== */
+    document.body.addEventListener(
+        'touchmove',
+        (e) => {
+            if (Math.abs(e.touches[0].clientX - startX) > 10) {
+                e.preventDefault();
+            }
+        },
+        { passive: false }
+    );
+</script>
+
 </body>
 </html>
